@@ -24,8 +24,7 @@ If no custom config exists, a default rate limit (e.g., 10 req/min) is applied a
 
 
 ### Request Flow
-
-
+![Architecture Diagram](ratelimiter.drawio.png)
 
 
 

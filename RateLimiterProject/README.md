@@ -88,3 +88,10 @@ uvicorn main:app --reload
 ### Next Steps
 
 Add more rate limiting algorithms like token bucket, leaky bucket etc.
+
+
+### References 
+
+[1] : https://www.geeksforgeeks.org/rate-limiting-algorithms-system-design/
+[2] : https://www.youtube.com/watch?v=fmT5nlEkl3U
+

@@ -85,4 +85,6 @@ uvicorn main:app --reload
     d) Learned the rate limiter algorithm.
     e) Learned and used Jinja2 dashboard.
 
+### Next Steps
 
+Add more rate limiting algorithms like token bucket, leaky bucket etc.

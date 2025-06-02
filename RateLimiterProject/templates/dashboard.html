@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rate Limit Dashboard</title>
+</head>
+<body>
+    <h2>Rate Limit Config for IP: {{ ip }}</h2>
+    <form method="post">
+        <label>Limit:</label>
+        <input type="number" name="limit" value="{{ limit }}"><br><br>
+        <label>Window (seconds):</label>
+        <input type="number" name="window" value="{{ window }}"><br><br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

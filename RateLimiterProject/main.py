@@ -1,11 +1,16 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, Form, HTTPException, Request, status
+from fastapi.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
 from redis import Redis
 from redis_client import create_redis_client
-from middleware import RateLimitMiddleware
+from ratelimiters.FixedWindowRateLimiter import RateLimitMiddleware
 from RateLimitConfig import RateLimitConfig
 
 app = FastAPI() 
 app.add_middleware(RateLimitMiddleware)
+
+# Set up templates directory
+templates = Jinja2Templates(directory="templates")
 
 # create a Redis client instance
 redis_client:Redis = create_redis_client()
@@ -71,3 +76,19 @@ def set_user_config(user_id: str, config: RateLimitConfig):
         "source": "redis"
     }
     
+@app.get("/dashboard")
+def get_dashboard(request: Request, ip: str = "127.0.0.1"):
+    config = redis_client.hgetall(f"config:{ip}")
+    limit = config.get("limit", 10)
+    window = config.get("window", 60)
+    return templates.TemplateResponse("dashboard.html", {
+        "request": request,
+        "ip": ip,
+        "limit": int(limit),
+        "window": int(window)
+    })
+
+@app.post("/dashboard")
+def post_dashboard(request: Request, ip: str = "127.0.0.1", limit: int = Form(...), window: int = Form(...)):
+    redis_client.hset(f"config:{ip}", mapping={"limit": limit, "window": window})
+    return RedirectResponse(f"/dashboard?ip={ip}", status_code=303)

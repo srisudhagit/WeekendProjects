@@ -18,8 +18,8 @@ public class FraudService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
 
-    public FraudService(StringRedisTemplate redisTemplate, KafkaTemplate<String, String> kafkaTemplate, @Value("${fraud.threshold}") int threshold,
-            @Value("${fraud.window-ms}") int windowMs) {
+    public FraudService(StringRedisTemplate redisTemplate, KafkaTemplate<String, String> kafkaTemplate, @Value("${fraud.threshold:3}") int threshold,
+            @Value("${fraud.window-ms:60000}") int windowMs) {
         this.redisTemplate = redisTemplate;
         this.kafkaTemplate = kafkaTemplate;
         this.threshold = threshold;

@@ -123,14 +123,11 @@ When kafkaTemplate.send() is called:
 
 3. Batch is sent when:
 
-    Batch full
-    linger timeout expires
-    flush() is called
+    Batch full or linger timeout expires or flush() is called
 
 4. On failure → retries until:
 
-    Success
-    delivery timeout exceeded
+    Success or delivery timeout exceeded
 
 ### Consumer Service
 
@@ -172,7 +169,7 @@ Spring level - spring.kafka.listener.ack-mode=manual
 
     consumer.commitSync()
 
-Offsets are committed only after successful processing (commit sync).
+Offsets are committed only after successful processing (commit sync). This ensures atleast once guarantee for the delivery. if we do commitSync() before processing it is atmost once delivery.
 
 ### Fraud Detection Logic
 
@@ -205,3 +202,8 @@ fraud.window-ms=60000
 
 5. Observe fraud alerts
 
+### Output
+
+![output1](output1.png)
+
+![output2](output2.png)

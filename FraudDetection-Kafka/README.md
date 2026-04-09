@@ -42,6 +42,9 @@ docker-compose up
 
 ### Create topics
 
+Exec into the kafka contianer to run more commands (dont need for the first time)
+docker-compose exec kafka kafka-topics --create --topic transactions --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
 kafka-topics --create \
   --topic transactions \
   --bootstrap-server localhost:9092 \
@@ -192,15 +195,19 @@ fraud.window-ms=60000
 
 #### How to Run
 
-1. Start infra (docker-compose)
+1. Start infra (docker-compose) - docker-compose run
 
-2. Start producer service
+2. Start producer service - mvnw spring-boot:run
 
-3. Start consumer service
+3. Start consumer service - mvnw spring-boot:run
 
-4. Publish transactions
+4. Publish transactions - make api call http://localhost:8080/api/transactions with body {
+    "transactionId" : "100",
+    "amount" : 100,
+    "accountId" : "19999"
+}
 
-5. Observe fraud alerts
+5. Observe fraud alerts - observe in logs the fruad being flagged
 
 ### Output
 
